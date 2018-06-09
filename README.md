@@ -1,2 +1,5 @@
-# python-udacity-bike-project
-Python project for sharing bike system all over US.
+# Python Udacity Bike Project
+Python project for data analysis of bike sharing system all over Chicago.
+
+## Dependencies
+> Matplotlib
