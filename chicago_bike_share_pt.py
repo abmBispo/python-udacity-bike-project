@@ -53,7 +53,14 @@ raw_input("Aperte Enter para continuar...")
 # TAREFA 3
 # TODO: Crie uma função para adicionar as colunas(features) de uma lista em outra lista, na mesma ordem
 def column_to_list(data, index):
-    column_list = [row[6] for row in data]
+    """Função para pegar uma coluna do csv e e jogar todos os seus valores numa lista nova
+    Args:
+        data_list (list): lista lida via csv para ser interpretada
+        index (integer): qual coluna será transformada pela 
+    Returns:
+        column_list (list): uma lista das quantidades dos usuários do tipo "Male" e do tipo "Female".
+    """
+    column_list = [row[index] for row in data]
     return column_list
 
 # Vamos checar com os gêneros se isso está funcionando (apenas para os primeiros 20)
@@ -87,9 +94,15 @@ raw_input("Aperte Enter para continuar...")
 # TODO: Crie uma função para contar os gêneros. Retorne uma lista.
 # Isso deveria retornar uma lista com [count_male, count_female] (exemplo: [10, 15] significa 10 Masculinos, 15 Femininos)
 def count_gender(data_list):
-	male = len([row[6] for row in data_list if row[6]=='Male'])
-	female = len([row[6] for row in data_list if row[6]=='Female'])
-	return [male, female]
+    """Função para retornar qual é o maior gênero no data set
+    Args:
+        data_list (list): lista lida via csv para ser interpretada
+    Returns:
+        array (list): uma lista das quantidades dos usuários do tipo "Male" e do tipo "Female".
+    """
+    male = len([row[6] for row in data_list if row[6]=='Male'])
+    female = len([row[6] for row in data_list if row[6]=='Female'])
+    return [male, female]
 
 print("\nTAREFA 5: Imprimindo o resultado de count_gender")
 print(count_gender(data_list))
@@ -106,6 +119,12 @@ raw_input("Aperte Enter para continuar...")
 # TODO: Crie uma função que pegue o gênero mais popular, e retorne este gênero como uma string.
 # Esperamos ver "Masculino", "Feminino", ou "Igual" como resposta.
 def most_popular_gender(data_list):
+    """Função para retornar qual é o maior gênero no data set
+    Args:
+        data_list (list): lista lida via csv para ser interpretada
+    Returns:
+        anwser (string): a resposta pode ser 'Masculino' ou 'Feminino'
+    """
     male, famale = count_gender(data_list)
     if male > famale:
 		answer = 'Masculino'
@@ -139,6 +158,12 @@ raw_input("Aperte Enter para continuar...")
 print("\nTAREFA 7: Verifique o grafico!")
 
 def most_popular_user_type(data_list):
+    """Função para retornar a quantidade de cada tipo de usuário do data set passado via parâmetro (Subscriber ou Customer)
+    Args:
+        data_list (list): lista lida via csv para ser interpretada e pegar os valores da sexta coluna
+    Returns:
+        array (list): lista de duas posições que contém primeiro a quantidade de assinantes e depois a quantidade de clientes. 
+    """
     male, famale = count_gender(data_list)
     if male > famale:
 		answer = 'Masculino'
@@ -147,9 +172,15 @@ def most_popular_user_type(data_list):
     return answer
 
 def count_user_type(data_list):
-	subscriber = len([row[5] for row in data_list if row[5]=='Subscriber'])
-	customer = len([row[5] for row in data_list if row[5]=='Customer'])
-	return [subscriber, customer]
+    """Função para retornar a quantidade de cada tipo de usuário do data set passado via parâmetro (Subscriber ou Customer)
+    Args:
+        data_list (list): lista lida via csv para ser interpretada e pegar os valores da sexta coluna
+    Returns:
+        array (list): lista de duas posições que contém primeiro a quantidade de assinantes e depois a quantidade de clientes. 
+    """
+    subscriber = len([row[5] for row in data_list if row[5]=='Subscriber'])
+    customer = len([row[5] for row in data_list if row[5]=='Customer'])
+    return [subscriber, customer]
 
 # Se tudo está rodando como esperado, verifique este gráfico!
 gender_list = column_to_list(data_list, -3)
@@ -178,19 +209,61 @@ assert answer != "Escreva sua resposta aqui.", "TAREFA 8: Escreva sua própria r
 # -----------------------------------------------------
 
 
-input("Aperte Enter para continuar...")
+raw_input("Aperte Enter para continuar...")
 # Vamos trabalhar com trip_duration (duração da viagem) agora. Não conseguimos tirar alguns valores dele.
 # TAREFA 9
 # TODO: Ache a duração de viagem Mínima, Máxima, Média, e Mediana.
 # Você não deve usar funções prontas parTODO isso, como max() e min().
 trip_duration_list = column_to_list(data_list, 2)
-min_trip = 0.
-max_trip = 0.
-mean_trip = 0.
-median_trip = 0.
+
+def get_val(data,comparator = 'gt'):
+    """Função para pegar ou o maior ou menor valor de uma lista com base no parâmetro 'comparator'.
+    Args:
+        data (list): lista de números para comparar.
+        comparator (string): variável para diferenciar as comparações de maior ou menor (grater than ou less than).
+    Returns:
+        f_val (float): menor ou maior valor encontrado na lista com base no parâmetro de comparação. 
+    """
+    f_val = float(data[0])
+    for val in data:
+        if comparator == 'gt' and float(val) > f_val:
+            f_val = float(val)
+        elif comparator == 'lt' and float(val) < f_val:
+            f_val = float(val)
+    return f_val
+
+def mean(data):
+    """Função para achar a média dos valores numa lista
+    Args:
+        data (list): lista de números para comparar.
+    Returns:
+        mean (float): a média da lista de números.
+    """
+    return sum([float(val) for val in data if val != ''])/len(data)
+
+def median(data):
+    """Função para achar a mediana dos valores numa lista
+    Args:
+        data (list): lista de números para comparar.
+    Returns:
+        median (float): a mediana da lista de números.
+    """
+    data = sorted([float(val) for val in data if val != ''])
+    data_len = len(data)
+    index = (data_len - 1) // 2
+    if data_len % 2 == 0:
+        return float(data[index])
+    else:
+        return (float(data[index]) + float(data[index + 1]))/2.0
+
+min_trip = get_val(trip_duration_list, 'lt')
+max_trip = get_val(trip_duration_list, 'gt')
+mean_trip = mean(trip_duration_list)
+median_trip = median(trip_duration_list)
 
 print("\nTAREFA 9: Imprimindo o mínimo, máximo, média, e mediana")
-print("Min: ", min_trip, "Max: ", max_trip, "Média: ", mean_trip, "Mediana: ", median_trip)
+print("Min: ", min_trip, "Max: ", max_trip, "Media: ", mean_trip, "Mediana: ", median_trip)
+
 
 # ------------ NÃO MUDE NENHUM CÓDIGO AQUI ------------
 assert round(min_trip) == 60, "TAREFA 9: min_trip com resultado errado!"
@@ -198,3 +271,54 @@ assert round(max_trip) == 86338, "TAREFA 9: max_trip com resultado errado!"
 assert round(mean_trip) == 940, "TAREFA 9: mean_trip com resultado errado!"
 assert round(median_trip) == 670, "TAREFA 9: median_trip com resultado errado!"
 # -----------------------------------------------------
+
+raw_input("Aperte Enter para continuar...")
+# TAREFA 10
+# Gênero é fácil porque nós temos apenas algumas opções. E quanto a start_stations? Quantas opções ele tem?
+# TODO: Verifique quantos tipos de start_stations nós temos, usando set()
+user_types = set(column_to_list(data_list,3))
+
+print("\nTAREFA 10: Imprimindo as start stations:")
+print(len(user_types))
+print(user_types)
+
+# ------------ NÃO MUDE NENHUM CÓDIGO AQUI ------------
+assert len(user_types) == 582, "TAREFA 10: Comprimento errado de start stations."
+# -----------------------------------------------------
+
+
+raw_input("Aperte Enter para continuar...")
+# TAREFA 11
+# Volte e tenha certeza que você documenteou suas funções. Explique os parâmetros de entrada, a saída, e o que a função faz. Exemplo:
+# def new_function(param1: int, param2: str) -> list:
+    # """
+    #   Função de exemplo com anotações.
+    #   Argumentos:
+    #       param1: O primeiro parâmetro.
+    #       param2: O segundo parâmetro.
+    #   Retorna:
+    #       Uma lista de valores x.
+    #   """
+
+raw_input("Aperte Enter para continuar...")
+# TAREFA 12 - Desafio! (Opcional)
+# TODO: Crie uma função para contar tipos de usuários, sem definir os tipos
+# para que nós possamos usar essa função com outra categoria de dados.
+print("Você vai encarar o desafio? (yes ou no)")
+answer = "no"
+
+def count_items(column_list):
+    item_types = []
+    count_items = []
+    return item_types, count_items
+
+
+if answer == "yes":
+    # ------------ NÃO MUDE NENHUM CÓDIGO AQUI ------------
+    column_list = column_to_list(data_list, -2)
+    types, counts = count_items(column_list)
+    print("\nTAREFA 11: Imprimindo resultados para count_items()")
+    print("Tipos:", types, "Counts:", counts)
+    assert len(types) == 3, "TAREFA 11: Há 3 tipos de gênero!"
+    assert sum(counts) == 1551505, "TAREFA 11: Resultado de retorno incorreto!"
+    # -----------------------------------------------------
