@@ -123,13 +123,15 @@ def most_popular_gender(data_list):
     Args:
         data_list (list): lista lida via csv para ser interpretada
     Returns:
-        anwser (string): a resposta pode ser 'Masculino' ou 'Feminino'
+        anwser (string): a resposta pode ser 'Masculino', 'Feminino' ou 'Igual'
     """
-    male, famale = count_gender(data_list)
-    if male > famale:
+    male, female = count_gender(data_list)
+    if male > female:
         answer = 'Masculino'
-    else:
+    elif male < female:
         answer = 'Feminino'
+    else:
+        answer = 'Igual'
     return answer
 
 print("\nTAREFA 6: Qual é o gênero mais popular na lista?")
