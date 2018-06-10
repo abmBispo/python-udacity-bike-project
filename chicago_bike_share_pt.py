@@ -29,7 +29,7 @@ raw_input("Aperte Enter para continuar...")
 # TODO: Imprima as primeiras 20 linhas usando um loop para identificar os dados.
 print("\n\nTAREFA 1: Imprimindo as primeiras 20 amostras")
 for row in data_list[:20]:
-	print(row)
+    print(row)
 
 # Vamos mudar o data_list para remover o cabeçalho dele.
 data_list = data_list[1:]
@@ -44,10 +44,10 @@ raw_input("Aperte Enter para continuar...")
 # Modifiquei um pouco a saída da impressão para denotar espaços vazios no csv
 print("\nTAREFA 2: Imprimindo o gênero das primeiras 20 amostras")
 for row in data_list[:20]:
-	if row[6]=='':
-  		print('NOT_FOUND')
-	else:
-		print(row[6])
+    if row[6]=='':
+        print('NOT_FOUND')
+    else:
+        print(row[6])
 
 raw_input("Aperte Enter para continuar...")
 # TAREFA 3
@@ -127,9 +127,9 @@ def most_popular_gender(data_list):
     """
     male, famale = count_gender(data_list)
     if male > famale:
-		answer = 'Masculino'
+        answer = 'Masculino'
     else:
-    	answer = 'Feminino'
+        answer = 'Feminino'
     return answer
 
 print("\nTAREFA 6: Qual é o gênero mais popular na lista?")
@@ -166,9 +166,9 @@ def most_popular_user_type(data_list):
     """
     male, famale = count_gender(data_list)
     if male > famale:
-		answer = 'Masculino'
+        answer = 'Masculino'
     else:
-    	answer = 'Feminino'
+        answer = 'Feminino'
     return answer
 
 def count_user_type(data_list):
